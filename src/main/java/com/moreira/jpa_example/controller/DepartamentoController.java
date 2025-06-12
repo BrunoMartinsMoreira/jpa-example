@@ -36,10 +36,20 @@ public class DepartamentoController {
     }
   }
 
+  @GetMapping("/departamentos/nome/{nome}")
+  public ResponseEntity<Optional<Departamento>> buscarDepartamentoPorNome(@PathVariable String nome) {
+    try {
+      Optional<Departamento> dpto = dao.findByNome(nome);
+      return ResponseEntity.status(HttpStatus.OK).body(dpto);
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
+  }
+
   @GetMapping("/departamentos/listar")
   public ResponseEntity<ArrayList<Departamento>> listarDepartamentos() {
    try {
-     ArrayList<Departamento> lista = (ArrayList<Departamento>)dao.findAll();
+     ArrayList<Departamento> lista = dao.findByOrderByNomeDesc();
      return ResponseEntity.status(HttpStatus.OK).body(lista);
    } catch (Exception e) {
      throw new RuntimeException(e);
