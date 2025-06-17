@@ -1,5 +1,6 @@
 package com.moreira.jpa_example.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 @Entity
@@ -20,7 +21,8 @@ public class Funcionario {
   private double salario;
 
   @ManyToOne
-  @JoinColumn(name="numero_id", nullable = false)
+  @JoinColumn(name="numero_id")
+  @JsonIgnoreProperties("funcionarios")
   private Departamento depto;
 
   public int getNumFuncional() {

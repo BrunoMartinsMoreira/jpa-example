@@ -1,7 +1,10 @@
 package com.moreira.jpa_example.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Table(name="departamento")
@@ -16,6 +19,18 @@ public class Departamento {
 
   @Column(name="andar", nullable = false)
   private int andar;
+
+  public List<Funcionario> getFuncionarios() {
+    return funcionarios;
+  }
+
+  public void setFuncionarios(List<Funcionario> funcionarios) {
+    this.funcionarios = funcionarios;
+  }
+
+  @OneToMany(mappedBy = "depto", cascade = CascadeType.ALL)
+  @JsonIgnoreProperties("depto")
+  public List<Funcionario> funcionarios;
 
   public int getNumeroId() {
     return numeroId;
