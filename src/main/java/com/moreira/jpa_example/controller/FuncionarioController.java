@@ -22,7 +22,8 @@ public class FuncionarioController {
   @PostMapping("/funcionarios")
   public ResponseEntity<Funcionario> criarFuncionario(@RequestBody Funcionario func) {
     try {
-      Departamento dpto = deptoDAO.findById(func.getDepto().getNumeroId())
+      Departamento dpto = deptoDAO
+          .findById(func.getDepto().getNumeroId())
           .orElseThrow(() -> new RuntimeException("Departamento não encontrado com ID: " + func.getDepto().getNumeroId()));
 
       func.setDepto(dpto);
@@ -36,8 +37,9 @@ public class FuncionarioController {
   @GetMapping("/funcionarios")
   public ResponseEntity<ArrayList<Funcionario>> listarFuncionarios() {
     try {
-      ArrayList<Funcionario> funcs = (ArrayList<Funcionario>)funcDAO.findAll();
-      return ResponseEntity.status(HttpStatus.OK).body(funcs);
+      return ResponseEntity
+          .status(HttpStatus.OK)
+          .body((ArrayList<Funcionario>)funcDAO.findAll());
     } catch (RuntimeException e) {
       throw new RuntimeException(e);
     }
